@@ -15,7 +15,7 @@ $meta_tag_groups_query = $db->Execute("SELECT DISTINCT meta_tag_group FROM " . T
 $meta_tag_groups = array();
 while (!$meta_tag_groups_query->EOF) {
     $meta_tag_group_id = str_replace(' ', '-', $meta_tag_groups_query->fields['meta_tag_group']);
-    $meta_tag_group_name = str_replace('_',' ',$meta_tag_groups_query->fields['meta_tag_group']);
+    $meta_tag_group_name = str_replace('_', ' ', $meta_tag_groups_query->fields['meta_tag_group']);
     $meta_tag_groups[] = array(
         'id' => $meta_tag_group_id,
         'name' => ucwords($meta_tag_group_name),
@@ -71,8 +71,6 @@ while (!$meta_tag_groups_query->EOF) {
             // -->
         </script>
         <script>
-
-
             function loadMetaTags(dataTarget) {
                 var metaGroup = dataTarget.replace("#tabs-", "");
                 $('.tab-pane').removeClass('active');
@@ -115,16 +113,16 @@ while (!$meta_tag_groups_query->EOF) {
 
                         $(data.metatags).each(function (index, metaTag) {
                             table = table + '<tr>';
-                            table = table + '<td><input type="text" class="form-control metaTagInput-' + metaTag.id + '" name="page_id" disabled value="' + metaTag.id + '"><input type="hidden" name="page_id" class="metaTagInput-' + metaTag.id + '" value="' + metaTag.id + '"></td>';
-                            table = table + '<td class="language"><input type="hidden" class="metaTagInput-' + metaTag.id + '" name="language_id" value="' + metaTag.language_id + '">' + metaTag.language + '</td>';
-                            table = table + '<td><input type="text" class="form-control metaTagInput-' + metaTag.id + '" name="name" disabled value="' + metaTag.name + '"></td>';
-                            table = table + '<td><input type="text" class="form-control metaTagInput-' + metaTag.id + '" name="title" value="' + metaTag.title + '"></td>';
-                            table = table + '<td><textarea rows="5" class="form-control metaTagInput-' + metaTag.id + '" name="description">' + metaTag.description + '</textarea></td>';
-                            table = table + '<td><textarea rows="5" class="form-control metaTagInput-' + metaTag.id + '" name="keywords">' + metaTag.keywords + '</textarea></td>';
+                            table = table + '<td><input type="text" class="form-control metaTagInput-' + metaTag.id + '-id" name="page_id" disabled value="' + metaTag.id + '"><input type="hidden" name="page_id" class="metaTagInput-' + metaTag.id + '-id" value="' + metaTag.id + '"></td>';
+                            table = table + '<td class="language"><input type="hidden" class="metaTagInput-' + metaTag.id + '-id" name="language_id" value="' + metaTag.language_id + '">' + metaTag.language + '</td>';
+                            table = table + '<td><input type="text" class="form-control metaTagInput-' + metaTag.id + '-id" name="name" disabled value="' + metaTag.name + '"></td>';
+                            table = table + '<td><input type="text" class="form-control metaTagInput-' + metaTag.id + '-id" name="title" value="' + metaTag.title + '"></td>';
+                            table = table + '<td><textarea rows="5" class="form-control metaTagInput-' + metaTag.id + '-id" name="description">' + metaTag.description + '</textarea></td>';
+                            table = table + '<td><textarea rows="5" class="form-control metaTagInput-' + metaTag.id + '-id" name="keywords">' + metaTag.keywords + '</textarea></td>';
                             table = table + '<td>';
                             table = table + '<button type="button" class="btn btn-primary" id="updateMeta' + metaTag.id + '" onclick="updateMetaTags(\'' + metaTag.id + '\',\'' + metaGroup + '\')">Update</button>';
-                            if(metaTag.removeable === 'true'){
-                                table = table + '<button type="button" class="btn btn-danger" onclick="deletePage(\''+metaTag.id+'\',\''+metaGroup+'\')">Delete</button>';
+                            if (metaTag.removeable === 'true') {
+                                table = table + '<button type="button" class="btn btn-danger" onclick="deletePage(\'' + metaTag.id + '\',\'' + metaGroup + '\')">Delete</button>';
                             }
                             table = table + '</td>';
                             table = table + '</tr>';
@@ -137,7 +135,7 @@ while (!$meta_tag_groups_query->EOF) {
                 return false;
             }
             function updateMetaTags(id, group) {
-                var values = $('.metaTagInput-' + id).serialize();
+                var values = $('.metaTagInput-' + id + '-id').serialize();
                 console.log(id + ',' + group + ',' + values);
                 $.ajax({
                     type: "POST",
@@ -166,7 +164,7 @@ while (!$meta_tag_groups_query->EOF) {
                     type: "POST",
                     dataType: "json",
                     url: "<?php echo FILENAME_AJAX_META_TAGS_CONTROLLER; ?>", //Relative or absolute path to response.php file
-                    data: 'meta_action=delete&id=' +id+'&group='+group ,
+                    data: 'meta_action=delete&id=' + id + '&group=' + group,
                     success: function (data) {
 
                     }
@@ -243,7 +241,7 @@ while (!$meta_tag_groups_query->EOF) {
                     <hr>
                     <div id="add-new-page">
                         Page Name: <input type="text" name="new_page_name" class="form-control newPage">
-                        Group: <input type="text" name="group" class="form-control newPage">
+                        Group: <input type="text" name="group" class="form-control newPage" value="general">
                         <input type="hidden" name="language_id" value="1" class="newPage">
                         <button class="btn btn-primary" onclick="addPage()">Add Page</button>
                     </div>
