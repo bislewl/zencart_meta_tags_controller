@@ -59,23 +59,19 @@ if (!$sniffer->field_exists (TABLE_EZPAGES, 'pages_meta_title')) {
 }
 
 $db->Execute("CREATE TABLE IF NOT EXISTS " . TABLE_META_TAGS . " (
-	`meta_tags_id` int(11) NOT NULL,
+	`meta_tags_id` int(11) NOT NULL AUTO_INCREMENT,
 	`page` varchar(255) NOT NULL DEFAULT '',
   `language_id` int(11) NOT NULL DEFAULT '1',
   `metatags_title` varchar(255) NOT NULL DEFAULT '',
   `metatags_keywords` text,
   `metatags_description` text,
-  `meta_tag_group` varchar(256)
+  `meta_tag_group` varchar(256),
   PRIMARY KEY (`meta_tags_id`,`language_id`));"
 );
 
-
-global $sniffer;
-if (!$sniffer->field_exists(TABLE_META_TAGS, 'meta_tag_group')) $db->Execute("ALTER TABLE " . TABLE_META_TAGS . " ADD meta_tag_group varchar(256);");
-
 $db->Execute("INSERT INTO ".TABLE_META_TAGS." (`page`, `language_id`, `metatags_title`, `metatags_keywords`, `metatags_description`, `meta_tag_group`) VALUES
-(1, 'site_wide', 1, 'Zen Cart!', 'The Art of E-commerce', 'ecommerce, open source, shop, online shopping, store', 'site_wide'),
-(2, 'home', 1, '', 'Home Meta Description', 'Meta Keywords', 'general'),
-(3, 'contact_us', 1, '', NULL, NULL, 'general'),
-(4, 'privacy', 1, '', NULL, NULL, 'general'),
-(5, 'conditions', 1, '', NULL, NULL, 'general');");
+('site_wide', 1, 'Zen Cart!', 'The Art of E-commerce', 'ecommerce, open source, shop, online shopping, store', 'site_wide'),
+('home', 1, '', 'Home Meta Description', 'Meta Keywords', 'general'),
+('contact_us', 1, '', NULL, NULL, 'general'),
+('privacy', 1, '', NULL, NULL, 'general'),
+('conditions', 1, '', NULL, NULL, 'general');");
