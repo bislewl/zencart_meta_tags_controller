@@ -14,11 +14,12 @@ require('includes/application_top.php');
 $action = zen_db_prepare_input($_POST['meta_action']);
 $meta_group = strtolower(zen_db_prepare_input($_POST['group']));
 $id = zen_db_prepare_input($_POST['page_id']);
-$title = zen_db_prepare_input($_POST['title']);
-$keywords = zen_db_prepare_input($_POST['keywords']);
-$description = zen_db_prepare_input($_POST['description']);
+$title = zen_db_prepare_input(addslashes($_POST['title']));
+$keywords = zen_db_prepare_input(addslashes($_POST['keywords']));
+$description = zen_db_prepare_input(addslashes($_POST['description']));
 $language_id = zen_db_prepare_input($_POST['language_id']);
 $new_page_name = zen_db_prepare_input($_POST['new_page_name']);
+
 
 if (isset($action) && $action != '') {
     switch ($action) {

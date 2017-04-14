@@ -35,6 +35,14 @@ if ($meta_tags_sitewide->RecordCount() > 0) {
 // Custom Keywords
     define('CUSTOM_KEYWORDS', 'ecommerce, open source, shop, online shopping, store');
 }
+$ez_pages_meta = $db->Execute("SELECT * FROM " . TABLE_EZPAGES);
+while (!$ez_pages_meta->EOF) {
+    $ez_page_id = $ez_pages_meta->fields['pages_id'];
+    define('META_TAG_DESCRIPTION_EZPAGE_' . $ez_page_id, $ez_pages_meta->fields['pages_meta_description']);
+    define('META_TAG_KEYWORDS_EZPAGE_' . $ez_page_id, $ez_pages_meta->fields['pages_meta_keywords']);
+    define('META_TAG_TITLE_EZPAGE_' . $ez_page_id, $ez_pages_meta->fields['pages_meta_title']);
+    $ez_pages_meta->MoveNext();
+}
 
 
 // BELOW SHOULD NOT NEED TO BE MODIFIED

@@ -69,9 +69,7 @@ $db->Execute("CREATE TABLE IF NOT EXISTS " . TABLE_META_TAGS . " (
   PRIMARY KEY (`meta_tags_id`,`language_id`));"
 );
 
+
 $db->Execute("INSERT INTO ".TABLE_META_TAGS." (`page`, `language_id`, `metatags_title`, `metatags_keywords`, `metatags_description`, `meta_tag_group`) VALUES
-('site_wide', 1, 'Zen Cart!', 'The Art of E-commerce', 'ecommerce, open source, shop, online shopping, store', 'site_wide'),
-('home', 1, '', 'Home Meta Description', 'Meta Keywords', 'general'),
-('contact_us', 1, '', NULL, NULL, 'general'),
-('privacy', 1, '', NULL, NULL, 'general'),
-('conditions', 1, '', NULL, NULL, 'general');");
+('site_wide', 1, '".addslashes(TITLE)."', '".addslashes(CUSTOM_KEYWORDS)."', '".addslashes(SITE_TAGLINE)."', 'site_wide'),
+('home', 1, '".addslashes(HOME_PAGE_TITLE)."', '".addslashes(HOME_PAGE_META_KEYWORDS)."', '".addslashes(HOME_PAGE_META_DESCRIPTION)."', 'general');");
